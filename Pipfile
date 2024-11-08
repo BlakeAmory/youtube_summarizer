@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==3.2.18"
+djangorestframework = "==3.14.0"
+django-cors-headers = "==3.14.0"
+requests = "*"
+beautifulsoup4 = "*"
+python-dotenv = "==0.21.1"
+langchain-groq = "*"
+chromadb = "*"
+langchain = "*"
+gunicorn = "==20.1.0"
+whitenoise = "==6.4.0"
+langchain-core = "*"
+langchain-community = "*"
+sentence-transformers = "*"
+langchain-huggingface = "*"
+youtube-transcript-api = "*"
+selenium = "*"
+webdriver-manager = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

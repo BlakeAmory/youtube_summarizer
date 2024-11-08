@@ -1,0 +1,23 @@
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <img src="{{ summary.thumbnail }}" class="card-img-top" alt="{{ summary.title }}">
+                <div class="card-body">
+                    <h2 class="card-title">{{ summary.title }}</h2>
+                    <p class="card-text"><small class="text-muted">{{ summary.url }}</small></p>
+                    <div class="summary-content">
+                        {{ summary.summary|linebreaks }}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'history' %}" class="btn btn-primary">Back to History</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<h1>Welcome to YouTube Summarizer</h1>
+<p>Choose an option:</p>
+<ul>
+    <li><a href="{% url 'single_video_summary' %}">Summarize a Single Video</a></li>
+    <li><a href="{% url 'search' %}">Search and Summarize Multiple Videos</a></li>
+    <li><a href="{% url 'history' %}">View Summary History</a></li>
+</ul>
+{% endblock %}

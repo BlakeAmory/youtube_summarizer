@@ -1,0 +1,68 @@
+{% extends 'summarizer/base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Search Results for "{{ query }}"</h2>
+
+    {% if summaries %}
+        <p>Number of summaries: {{ summaries|length }}</p>
+        {% for summary in summaries %}
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        {% if summary.thumbnail_url %}
+                            <img src="{{ summary.thumbnail_url }}" class="card-img" alt="{{ summary.video_title|default:'Video' }}">
+                        {% else %}
+                            <p>No thumbnail available</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ summary.video_title|default:"No title available" }}</h5>
+                            <h6>Short Description:</h6>
+                            <p class="card-text">{{ summary.short_description|default:"No short description available" }}</p>
+                            <h6>Key Points:</h6>
+                            {% if summary.key_points %}
+                                <ul>
+                                    {% for point in summary.key_points %}
+                                        <li>{{ point }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>No key points available</p>
+                            {% endif %}
+                            <h6>Full Summary:</h6>
+                            <p class="card-text full-summary">{{ summary.full_summary|default:"No full summary available" }}</p>
+                            <button class="btn btn-secondary toggle-summary">Hide Full Summary</button>
+                            <a href="{{ summary.video_url }}" target="_blank" class="btn btn-primary mt-2">Watch Video</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No summaries found. Debug info: {{ summaries }}</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggle-summary').forEach(button => {
+        button.addEventListener('click', function() {
+            const fullSummary = this.previousElementSibling;
+            if (fullSummary.style.display === 'none') {
+                fullSummary.style.display = 'block';
+                this.textContent = 'Hide Full Summary';
+            } else {
+                fullSummary.style.display = 'none';
+                this.textContent = 'Show Full Summary';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

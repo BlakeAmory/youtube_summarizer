@@ -1,0 +1,33 @@
+{% extends 'summarizer/base.html' %}
+
+{% block title %}View Summary{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                {% if summary.thumbnail_url %}
+                    <img src="{{ summary.thumbnail_url }}" class="card-img" alt="{{ summary.video_title }}">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ summary.video_title }}</h5>
+                    <h6>Short Description:</h6>
+                    <p class="card-text">{{ summary.short_description }}</p>
+                    <h6>Key Points:</h6>
+                    <ul>
+                        {% for point in summary.key_points %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h6>Full Summary:</h6>
+                    <p class="card-text">{{ summary.summary }}</p>
+                    <a href="{{ summary.video_url }}" target="_blank" class="btn btn-primary">Watch Video</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

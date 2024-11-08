@@ -1,0 +1,67 @@
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Single Video Summary</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if not summary %}
+        <form method="post" id="summary-form" action="{% url 'single_video_summary' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Summarize</button>
+        </form>
+        <div id="summary-container"></div>
+    {% else %}
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    {% if video.thumbnail %}
+                        <img src="{{ video.thumbnail }}" class="card-img" alt="{{ video.title }}">
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ video.title }}</h5>
+                        <h6>Short Description:</h6>
+                        <p class="card-text">{{ summary.short_description }}</p>
+                        <h6>Key Points:</h6>
+                        <ul>
+                            {% for point in summary.key_points %}
+                                <li>{{ point }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h6>Full Summary:</h6>
+                        <p class="card-text full-summary" style="display: none;">{{ summary.full_summary }}</p>
+                        <button class="btn btn-secondary toggle-summary">Show Full Summary</button>
+                        <a href="{{ video.url }}" target="_blank" class="btn btn-primary">Watch Video</a>
+                        <a href="{% url 'single_video_summary' %}" class="btn btn-secondary">Summarize Another Video</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.toggle-summary').forEach(button => {
+        button.addEventListener('click', function() {
+            const fullSummary = this.previousElementSibling;
+            if (fullSummary.style.display === 'none') {
+                fullSummary.style.display = 'block';
+                this.textContent = 'Hide Full Summary';
+            } else {
+                fullSummary.style.display = 'none';
+                this.textContent = 'Show Full Summary';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

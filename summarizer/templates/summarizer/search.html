@@ -1,0 +1,20 @@
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Search YouTube Videos</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{% url 'search' %}" class="mt-4">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.query.label_tag }}
+            {{ form.query }}
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+{% endblock %}

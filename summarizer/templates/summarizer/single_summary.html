@@ -1,0 +1,25 @@
+{% extends 'summarizer/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Video Summary</h2>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ summary.thumbnail }}" class="img-fluid rounded-start" alt="{{ summary.title }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{ summary.title }}</h5>
+                    <p class="card-text"><small class="text-muted">{{ summary.url }}</small></p>
+                    <div class="summary-content">
+                        {{ summary.summary|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'single_video_summary' %}" class="btn btn-primary">Summarize Another Video</a>
+    <a href="{% url 'history' %}" class="btn btn-secondary">View History</a>
+</div>
+{% endblock %}

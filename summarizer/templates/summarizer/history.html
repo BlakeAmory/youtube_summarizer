@@ -1,0 +1,52 @@
+{% extends 'summarizer/base.html' %}
+
+{% block title %}Summary History{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Summary History</h2>
+    <div class="row">
+    {% if summaries %}
+        {% for summary in summaries %}
+            <div class="col-md-4">
+                <div class="card mb-3" style="height: 100%;">
+                    {% if summary.thumbnail_url %}
+                        <img src="{{ summary.thumbnail_url }}" class="card-img-top" alt="{{ summary.video_title }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ summary.video_title }}</h5>
+                        <p class="card-text">Summarized on: {{ summary.created_at|date:"F d, Y" }}</p>
+                        <a href="{% url 'view_summary' summary.id %}" class="btn btn-primary mt-auto">View Summary</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No summaries found.</p>
+        {% endfor %}
+    {% else %}
+        <p>No summaries found.</p>
+    {% endif %}
+    </div>
+
+    <h2>Your Search History</h2>
+    <div class="row">
+    {% if search_history %}
+        {% for search in search_history %}
+            <div class="col-md-4">
+                <div class="card mb-3" style="height: 100%;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ search.query }}</h5>
+                        <p class="card-text">Searched on: {{ search.created_at|date:"F d, Y" }}</p>
+                        <a href="{% url 'view_search' search.id %}" class="btn btn-secondary mt-auto">View Search</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No search history found.</p>
+        {% endfor %}
+    {% else %}
+        <p>No search history found.</p>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}
